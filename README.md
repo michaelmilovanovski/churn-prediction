@@ -21,7 +21,15 @@ Customer churn is costly—acquiring new customers is 5-25x more expensive than 
 
 ## Results
 
+### Churn Distribution
+
+![Churn Distribution](images/churn_distribution.png)
+
+**26.5% of customers churned** — roughly 1 in 4 customers left the service.
+
 ### Model Performance
+
+![Model Comparison](images/model_comparison.png)
 
 | Model | Accuracy | Precision | Recall | F1-Score | ROC-AUC |
 |-------|----------|-----------|--------|----------|---------|
@@ -31,17 +39,23 @@ Customer churn is costly—acquiring new customers is 5-25x more expensive than 
 
 **Best Model:** Logistic Regression with ROC-AUC of 0.842
 
-### Top Churn Predictors
+### ROC Curves
 
-| Rank | Feature | Importance |
-|------|---------|------------|
-| 1 | Fiber optic internet | 32.6% |
-| 2 | Two year contract | 22.7% |
-| 3 | One year contract | 16.5% |
-| 4 | No internet service | 5.4% |
-| 5 | Tenure | 3.0% |
+![ROC Curves](images/roc_curves.png)
 
-### Key Findings
+All three models show strong discrimination ability with AUC scores above 0.83.
+
+### Feature Importance
+
+![Feature Importance](images/feature_importance.png)
+
+### Churn by Contract Type
+
+![Churn by Contract](images/churn_by_contract.png)
+
+**Key Insight:** Month-to-month customers churn at **42.7%** compared to just **2.8%** for two-year contracts.
+
+## Key Findings
 
 1. **Churn Rate:** 26.5% of customers churned
 2. **Contract Type:** Month-to-month customers have significantly higher churn rates
@@ -74,7 +88,7 @@ churn-prediction/
 │   ├── 01_exploration.ipynb     # EDA & visualizations
 │   ├── 02_preprocessing.ipynb   # Data cleaning & feature engineering
 │   └── 03_modeling.ipynb        # Model training & evaluation
-├── src/
+├── images/                      # Visualization exports
 ├── README.md
 └── requirements.txt
 ```
