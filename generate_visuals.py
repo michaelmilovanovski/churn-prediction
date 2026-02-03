@@ -27,7 +27,7 @@ y_test = pd.read_csv('data/processed/y_test.csv').squeeze()
 # 1. CHURN DISTRIBUTION
 # ============================================================
 print("Creating churn distribution chart...")
-fig, ax = plt.subplots(figsize=(8, 5))
+fig, ax = plt.subplots(figsize=(7, 4))
 colors = ['#2ecc71', '#e74c3c']
 churn_counts = df['Churn'].value_counts()
 bars = ax.bar(['Retained', 'Churned'], [churn_counts['No'], churn_counts['Yes']],
@@ -39,15 +39,15 @@ for bar, count in zip(bars, [churn_counts['No'], churn_counts['Yes']]):
     pct = count / len(df) * 100
     ax.annotate(f'{count:,}\n({pct:.1f}%)',
                 xy=(bar.get_x() + bar.get_width() / 2, height),
-                ha='center', va='bottom', fontsize=12, fontweight='bold')
+                ha='center', va='bottom', fontsize=11, fontweight='bold')
 
-ax.set_ylabel('Number of Customers', fontsize=12)
-ax.set_title('Customer Churn Distribution', fontsize=14, fontweight='bold', pad=15)
+ax.set_ylabel('Number of Customers', fontsize=11)
+ax.set_title('Customer Churn Distribution', fontsize=13, fontweight='bold', pad=12)
 ax.set_ylim(0, max(churn_counts) * 1.15)
 plt.tight_layout()
-plt.savefig('images/churn_distribution.png', dpi=150, bbox_inches='tight', facecolor='white')
+plt.savefig('images/churn_distribution.svg', format='svg', bbox_inches='tight', facecolor='white')
 plt.close()
-print("  Saved: images/churn_distribution.png")
+print("  Saved: images/churn_distribution.svg")
 
 # ============================================================
 # 2. MODEL COMPARISON
@@ -93,7 +93,7 @@ results = {
 }
 
 print("Creating model comparison chart...")
-fig, ax = plt.subplots(figsize=(10, 6))
+fig, ax = plt.subplots(figsize=(8, 4.5))
 
 metrics = ['Accuracy', 'Precision', 'Recall', 'F1-Score', 'ROC-AUC']
 x = np.arange(len(metrics))
@@ -107,24 +107,24 @@ for i, (model, color) in enumerate(zip(models, colors)):
     offset = (i - 1) * width
     bars = ax.bar(x + offset, values, width, label=model, color=color, edgecolor='black', linewidth=0.5)
 
-ax.set_ylabel('Score', fontsize=12)
-ax.set_title('Model Performance Comparison', fontsize=14, fontweight='bold', pad=15)
+ax.set_ylabel('Score', fontsize=11)
+ax.set_title('Model Performance Comparison', fontsize=13, fontweight='bold', pad=12)
 ax.set_xticks(x)
-ax.set_xticklabels(metrics, fontsize=11)
-ax.legend(loc='lower right', fontsize=10)
+ax.set_xticklabels(metrics, fontsize=10)
+ax.legend(loc='lower right', fontsize=9)
 ax.set_ylim(0, 1.0)
 ax.axhline(y=0.5, color='gray', linestyle='--', alpha=0.5, linewidth=1)
 
 plt.tight_layout()
-plt.savefig('images/model_comparison.png', dpi=150, bbox_inches='tight', facecolor='white')
+plt.savefig('images/model_comparison.svg', format='svg', bbox_inches='tight', facecolor='white')
 plt.close()
-print("  Saved: images/model_comparison.png")
+print("  Saved: images/model_comparison.svg")
 
 # ============================================================
 # 3. ROC CURVES
 # ============================================================
 print("Creating ROC curves chart...")
-fig, ax = plt.subplots(figsize=(8, 6))
+fig, ax = plt.subplots(figsize=(6.5, 5))
 
 model_data = [
     ('Logistic Regression', lr_model.predict_proba(X_test)[:, 1], '#3498db'),
@@ -139,16 +139,16 @@ for name, prob, color in model_data:
 
 ax.plot([0, 1], [0, 1], 'k--', label='Random Classifier', linewidth=1.5, alpha=0.7)
 
-ax.set_xlabel('False Positive Rate', fontsize=12)
-ax.set_ylabel('True Positive Rate', fontsize=12)
-ax.set_title('ROC Curves - Model Comparison', fontsize=14, fontweight='bold', pad=15)
-ax.legend(loc='lower right', fontsize=10)
+ax.set_xlabel('False Positive Rate', fontsize=11)
+ax.set_ylabel('True Positive Rate', fontsize=11)
+ax.set_title('ROC Curves - Model Comparison', fontsize=13, fontweight='bold', pad=12)
+ax.legend(loc='lower right', fontsize=9)
 ax.grid(True, alpha=0.3)
 
 plt.tight_layout()
-plt.savefig('images/roc_curves.png', dpi=150, bbox_inches='tight', facecolor='white')
+plt.savefig('images/roc_curves.svg', format='svg', bbox_inches='tight', facecolor='white')
 plt.close()
-print("  Saved: images/roc_curves.png")
+print("  Saved: images/roc_curves.svg")
 
 # ============================================================
 # 4. FEATURE IMPORTANCE
@@ -159,24 +159,24 @@ feature_importance = pd.DataFrame({
     'importance': xgb_model.feature_importances_
 }).sort_values('importance', ascending=True).tail(10)
 
-fig, ax = plt.subplots(figsize=(10, 6))
+fig, ax = plt.subplots(figsize=(8, 5))
 colors = plt.cm.viridis(np.linspace(0.3, 0.9, len(feature_importance)))
 bars = ax.barh(feature_importance['feature'], feature_importance['importance'],
                color=colors, edgecolor='black', linewidth=0.5)
 
-ax.set_xlabel('Importance', fontsize=12)
-ax.set_title('Top 10 Features for Predicting Churn', fontsize=14, fontweight='bold', pad=15)
+ax.set_xlabel('Importance', fontsize=11)
+ax.set_title('Top 10 Features for Predicting Churn', fontsize=13, fontweight='bold', pad=12)
 
 # Add value labels
 for bar, val in zip(bars, feature_importance['importance']):
     ax.text(val + 0.005, bar.get_y() + bar.get_height()/2,
-            f'{val:.3f}', va='center', fontsize=10)
+            f'{val:.3f}', va='center', fontsize=9)
 
 ax.set_xlim(0, feature_importance['importance'].max() * 1.15)
 plt.tight_layout()
-plt.savefig('images/feature_importance.png', dpi=150, bbox_inches='tight', facecolor='white')
+plt.savefig('images/feature_importance.svg', format='svg', bbox_inches='tight', facecolor='white')
 plt.close()
-print("  Saved: images/feature_importance.png")
+print("  Saved: images/feature_importance.svg")
 
 # ============================================================
 # 5. CHURN BY CONTRACT TYPE
@@ -185,7 +185,7 @@ print("Creating churn by contract type chart...")
 contract_churn = df.groupby('Contract')['Churn'].apply(lambda x: (x == 'Yes').mean() * 100)
 contract_churn = contract_churn.reindex(['Month-to-month', 'One year', 'Two year'])
 
-fig, ax = plt.subplots(figsize=(8, 5))
+fig, ax = plt.subplots(figsize=(7, 4))
 colors = ['#e74c3c', '#f39c12', '#2ecc71']
 bars = ax.bar(contract_churn.index, contract_churn.values, color=colors,
               edgecolor='black', linewidth=1.2)
@@ -194,17 +194,17 @@ bars = ax.bar(contract_churn.index, contract_churn.values, color=colors,
 for bar, val in zip(bars, contract_churn.values):
     ax.annotate(f'{val:.1f}%',
                 xy=(bar.get_x() + bar.get_width() / 2, val),
-                ha='center', va='bottom', fontsize=12, fontweight='bold')
+                ha='center', va='bottom', fontsize=11, fontweight='bold')
 
-ax.set_ylabel('Churn Rate (%)', fontsize=12)
-ax.set_title('Churn Rate by Contract Type', fontsize=14, fontweight='bold', pad=15)
+ax.set_ylabel('Churn Rate (%)', fontsize=11)
+ax.set_title('Churn Rate by Contract Type', fontsize=13, fontweight='bold', pad=12)
 ax.set_ylim(0, contract_churn.max() * 1.15)
 ax.axhline(y=26.5, color='gray', linestyle='--', alpha=0.7, linewidth=1.5, label='Overall Avg (26.5%)')
-ax.legend(loc='upper right')
+ax.legend(loc='upper right', fontsize=9)
 
 plt.tight_layout()
-plt.savefig('images/churn_by_contract.png', dpi=150, bbox_inches='tight', facecolor='white')
+plt.savefig('images/churn_by_contract.svg', format='svg', bbox_inches='tight', facecolor='white')
 plt.close()
-print("  Saved: images/churn_by_contract.png")
+print("  Saved: images/churn_by_contract.svg")
 
 print("\nAll visualizations generated successfully!")

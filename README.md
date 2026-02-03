@@ -23,13 +23,13 @@ Customer churn is costly—acquiring new customers is 5-25x more expensive than 
 
 ### Churn Distribution
 
-![Churn Distribution](images/churn_distribution.png)
+![Churn Distribution](images/churn_distribution.svg)
 
 **26.5% of customers churned** — roughly 1 in 4 customers left the service.
 
 ### Model Performance
 
-![Model Comparison](images/model_comparison.png)
+![Model Comparison](images/model_comparison.svg)
 
 | Model | Accuracy | Precision | Recall | F1-Score | ROC-AUC |
 |-------|----------|-----------|--------|----------|---------|
@@ -41,17 +41,17 @@ Customer churn is costly—acquiring new customers is 5-25x more expensive than 
 
 ### ROC Curves
 
-![ROC Curves](images/roc_curves.png)
+![ROC Curves](images/roc_curves.svg)
 
 All three models show strong discrimination ability with AUC scores above 0.83.
 
 ### Feature Importance
 
-![Feature Importance](images/feature_importance.png)
+![Feature Importance](images/feature_importance.svg)
 
 ### Churn by Contract Type
 
-![Churn by Contract](images/churn_by_contract.png)
+![Churn by Contract](images/churn_by_contract.svg)
 
 **Key Insight:** Month-to-month customers churn at **42.7%** compared to just **2.8%** for two-year contracts.
 
